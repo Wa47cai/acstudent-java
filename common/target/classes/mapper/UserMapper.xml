@@ -1,99 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.douyu.wsd.reward.gift.common.dao.LiveRoomConfigMapper">
+<mapper namespace="com.acstudent.common.dao.UserMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.douyu.wsd.reward.gift.common.domain.LiveRoomConfig">
-        <id column="id" property="id" />
-        <result column="default_config" property="defaultConfig" />
-        <result column="template_id" property="templateId" />
-        <result column="name" property="name" />
-        <result column="desc" property="desc" />
-        <result column="room_scope_type" property="roomScopeType" />
-        <result column="room_scope_value" property="roomScopeValue" />
-        <result column="priority" property="priority" />
-        <result column="time_mode" property="timeMode" />
-        <result column="start_time" property="startTime" />
-        <result column="end_time" property="endTime" />
-        <result column="status" property="status" />
-    </resultMap>
-
-    <resultMap id="includeTemplateInfoResultMap" type="com.douyu.wsd.reward.gift.common.domain.po.LiveRoomConfigWithTemplateInfoPo">
+    <resultMap id="BaseResultMap" type="com.acstudent.common.dao.dto.User">
         <id column="id" property="id" />
         <result column="name" property="name" />
-        <result column="desc" property="desc" />
-        <result column="template_id" property="templateId" />
-        <result column="template_idt" property="templateIdt" />
-        <result column="template_name" property="templateName" />
-        <result column="room_scope_type" property="roomScopeType" />
-        <result column="room_scope_value" property="roomScopeValue" />
-        <result column="priority" property="priority" />
-        <result column="time_mode" property="timeMode" />
-        <result column="start_time" property="startTime" />
-        <result column="end_time" property="endTime" />
+        <result column="pwd" property="pwd" />
     </resultMap>
 
-    <select id="selectListForPage" parameterType="com.douyu.wsd.reward.gift.common.dao.dto.LiveRoomConfigPageQueryDto"
-      resultMap="includeTemplateInfoResultMap">
-        SELECT clr.* ,t.name as template_name from live_room_config clr, template t
-        WHERE clr.template_id = t.id
-        and clr.`status` != 'DELETED'
-        and t.`status` != 'DELETED'
-        and clr.default_config != 1
-        <if test="id != null">
-            and clr.id = #{id}
-        </if>
-        <if test="name != null and name !=''">
-            <bind name="pattern" value="'%' + name + '%'" />
-            and clr.name like #{pattern}
-        </if>
-        <if test="templateId !=null">
-            and clr.template_id = #{templateId}
-        </if>
-        <if test="roomScopeType != null">
-            and clr.room_scope_type = #{roomScopeType}
-        </if>
-        <if test="timeMode != null">
-            and clr.time_mode = #{timeMode}
-        </if>
-        <if test="priority != null">
-            and clr.priority = #{priority}
-        </if>
-        ORDER BY clr.id DESC limit #{offset}, #{limit}
-    </select>
+    <sql id="Base_Column_List">
+      id, name, pwd
+  </sql>
 
-    <select id="getTotalCountForPage" parameterType="com.douyu.wsd.reward.gift.common.dao.dto.LiveRoomConfigPageQueryDto"
-      resultType = "java.lang.Integer">
-        select count(*) from live_room_config clr, template t
-        WHERE clr.template_id = t.id
-        and clr.`status` != 'DELETED'
-        and t.`status` != 'DELETED'
-        and clr.default_config != 1
-        <if test="id != null">
-            and clr.id = #{id}
-        </if>
-        <if test="name != null and name !=''">
-            <bind name="pattern" value="'%' + name + '%'" />
-            and clr.name like #{pattern}
-        </if>
-        <if test="templateId !=null">
-            and clr.template_id = #{templateId}
-        </if>
-        <if test="roomScopeType != null">
-            and clr.room_scope_type = #{roomScopeType}
-        </if>
-        <if test="timeMode != null">
-            and clr.time_mode = #{timeMode}
-        </if>
-        <if test="priority != null">
-            and clr.priority = #{priority}
-        </if>
+    <select id="selectExpect" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from `user`
+        where id <![CDATA[!= ]]> #{id}
     </select>
-
-    <select id="selectAllNormalWithTemplateInfo" resultMap="includeTemplateInfoResultMap">
-        select c.*, t.idt as template_idt from live_room_config c inner join template t on c.template_id = t.id
-        where c.status != 'DELETED' and t.status != 'DELETED'
-    </select>
-
 
 </mapper>

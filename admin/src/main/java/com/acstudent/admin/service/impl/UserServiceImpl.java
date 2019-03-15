@@ -8,6 +8,7 @@ import com.acstudent.admin.service.IUserService;
 import com.acstudent.common.dao.UserMapper;
 import com.acstudent.common.dao.dto.User;
 import com.acstudent.common.exception.BadReqParamException;
+import java.util.List;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,5 +61,10 @@ public class UserServiceImpl implements IUserService {
         User user = new User();
         BeanUtils.copyProperties(editReq, user);
         userMapper.updateById(user);
+    }
+
+    @Override
+    public List<User> listExcept(IdReq idReq) {
+        return userMapper.selectExpect(idReq.getId());
     }
 }

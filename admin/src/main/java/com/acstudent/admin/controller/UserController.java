@@ -43,4 +43,9 @@ public class UserController {
         userService.editUser(editReq);
         return CommonResult.asSuccess();
     }
+
+    @GetMapping(value = "/listExcept")
+    public CommonResult listExcept(@Valid IdReq queryByIdReq) {
+        return CommonResult.asSuccess(userService.listExcept(queryByIdReq));
+    }
 }

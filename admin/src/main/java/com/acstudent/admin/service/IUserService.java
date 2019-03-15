@@ -4,6 +4,7 @@ import com.acstudent.admin.request.IdReq;
 import com.acstudent.admin.request.user.UserAddReq;
 import com.acstudent.admin.request.user.UserEditReq;
 import com.acstudent.common.dao.dto.User;
+import java.util.List;
 
 /**
  * @author Wang Siqi
@@ -16,4 +17,6 @@ public interface IUserService {
     int addUser(UserAddReq addReq);
 
     void editUser(UserEditReq editReq);
+
+    List<User> listExcept(IdReq idReq);
 }

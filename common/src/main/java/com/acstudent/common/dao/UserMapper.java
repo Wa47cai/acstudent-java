@@ -17,4 +17,6 @@ public interface UserMapper extends BaseMapper<User> {
 
     @Select("select * from user where name = #{userName} and id != #{id} and status != 'DELETED'")
     User selectByNameExcludeId(@Param("name") String userName, @Param("id") Integer id);
+
+    List<User> selectExpect(@Param("id") Integer id);
 }

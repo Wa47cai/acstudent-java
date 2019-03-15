@@ -25,6 +25,8 @@
   </properties>
 
   <dependencies>
+
+    <!-- 内部依赖 -->
     <dependency>
       <groupId>com.acstudent</groupId>
       <artifactId>common</artifactId>
@@ -37,6 +39,7 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
 
+    <!-- spring 依赖 -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter</artifactId>
@@ -55,6 +58,7 @@
       <scope>compile</scope>
     </dependency>
 
+    <!-- 实体类自动代码依赖 -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
