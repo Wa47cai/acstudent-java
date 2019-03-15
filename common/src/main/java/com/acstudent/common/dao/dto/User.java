@@ -1,6 +1,7 @@
 package com.acstudent.common.dao.dto;
 
 import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -9,6 +10,10 @@ import lombok.Data;
  */
 @Data
 @TableName("user")
-public class User {
+public class User implements Serializable {
+    private Integer id;
 
+    private String name;
+
+    private String pwd;
 }

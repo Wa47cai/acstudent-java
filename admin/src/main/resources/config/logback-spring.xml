@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+  <!--占位符定义-->
+  <!--占位符定义：名称，命名规范 wsd-name-java-->
+  <property name="appName" value="acstudent" />
+
+  <!--占位符定义：日志格式-->
+  <property name="PATTERN" value="%-12(%d{yyyy-MM-dd HH:mm:ss.SSS}) |-%-5level [%thread] %c [%L] -| %msg%n" />
+
+  <!--占位符定义：日志文件路径，统计使用，最后一层可自定义 /business or /biz 等等-->
+  <property name="FILE_PATH_STAT" value="/home/www/logs/applogs/${appName}/${HOSTNAME}-${appName}/default" />
+
+  <!--占位符定义：日志文件路径，actuator监控日志-->
+  <property name="FILE_PATH_ACTUATOR" value="/home/www/logs/applogs/${appName}/${HOSTNAME}-${appName}/actuator" />
+
+
+  <!--用来设置上下文名称，用于区分不同应用程序的记录-->
+  <contextName>${appName}</contextName>
+
+
+  <!--日志输出的目的地-->
+  <!--日志输出的目的地：控制台，本地启服务使用-->
+  <appender name="CONSOLE_LOCAL" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <!-- pattern节点，用来设置日志的输入格式 -->
+      <pattern>${PATTERN}</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!--日志输出的目的地：文件，线上定位问题使用-->
+  <appender name="FILE_ACTUATOR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${FILE_PATH_ACTUATOR}/${appName}.log</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${FILE_PATH_ACTUATOR}/${appName}.%d{yyyy-MM-dd}.nc</fileNamePattern>
+      <MaxHistory>60</MaxHistory>
+    </rollingPolicy>
+    <encoder>
+      <pattern>${PATTERN}</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+  <!--ERROR日志输出的目的地：文件，线上定位问题使用-->
+  <appender name="FILE_ACTUATOR_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <!-- 过滤器，只记录ERROR级别的日志 -->
+    <filter class="ch.qos.logback.classic.filter.LevelFilter">
+      <level>ERROR</level>
+      <onMatch>ACCEPT</onMatch>
+      <onMismatch>DENY</onMismatch>
+    </filter>
+    <!-- 日志路径与名称，在上述占位符中取，名称末尾加上了 _error 后缀，区别于info日志 -->
+    <file>${FILE_PATH_ACTUATOR}/${appName}_error.log</file>
+    <!-- 按时间滚动，每月归档一次 -->
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- 归档文件名格式，归档后后缀名由 .log 变为 .nc  -->
+      <fileNamePattern>${FILE_PATH_ACTUATOR}/${appName}_error.%d{yyyy-MM}.nc</fileNamePattern>
+      <!-- 保留10个归档文件 -->
+      <MaxHistory>10</MaxHistory>
+    </rollingPolicy>
+    <encoder>
+      <!-- 日志格式化输出，从上面占位符中获取 -->
+      <pattern>${PATTERN}</pattern>
+      <charset>UTF-8</charset>
+    </encoder>
+  </appender>
+
+
+  <!--线上环境-->
+  <springProfile name="pro">
+    <!-- 日志输出级别，根节点-->
+    <root level="info">
+      <appender-ref ref="FILE_ACTUATOR" />
+      <appender-ref ref="FILE_ACTUATOR_ERROR" />
+    </root>
+  </springProfile>
+
+  <!--本地环境-->
+  <springProfile name="dev">
+    <root level="info">
+      <appender-ref ref="CONSOLE_LOCAL" />
+      <appender-ref ref="FILE_ACTUATOR" />
+      <appender-ref ref="FILE_ACTUATOR_ERROR" />
+    </root>
+  </springProfile>
+
+  <!--自定义，日志输出级别，子节点-->
+  <!-- 指定项目中某个包，当有日志操作行为时的日志记录级别 -->
+  <!-- com.douyu为根包，也就是只要是发生在这个根包下面的所有日志操作行为的权限都是DEBUG -->
+  <!-- 级别依次为【从高到低】：FATAL > ERROR > WARN > INFO > DEBUG > TRACE  -->
+
+</configuration>

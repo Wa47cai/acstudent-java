@@ -1,11 +1,19 @@
 package com.acstudent.admin.service;
 
-import com.acstudent.admin.request.UserAddReq;
+import com.acstudent.admin.request.IdReq;
+import com.acstudent.admin.request.user.UserAddReq;
+import com.acstudent.admin.request.user.UserEditReq;
+import com.acstudent.common.dao.dto.User;
 
 /**
  * @author Wang Siqi
  * @date 2018/9/5
  */
 public interface IUserService {
-    void addUser(UserAddReq req);
+
+    User queryById(IdReq queryByIdReq);
+
+    int addUser(UserAddReq addReq);
+
+    void editUser(UserEditReq editReq);
 }

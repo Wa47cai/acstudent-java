@@ -1,2 +1,17 @@
 server:
-  port: 8080
+  port: 8056
+
+spring:
+  datasource:
+    url: jdbc:mysql://119.29.221.146:3306/acstudent?useUnicode=true&allowMultiQueries=true
+    username: root
+    password: wsqMYSQL@2018
+    driver-class-name: com.mysql.jdbc.Driver
+  redis:
+      host: 119.29.221.146
+      port: 6369
+      password: acstudent547
+      database: 0
+
+profiles:
+  active: dev

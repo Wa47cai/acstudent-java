@@ -25,7 +25,7 @@
   </properties>
 
   <dependencies>
-    <!-- mybatis START -->
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
@@ -38,6 +38,7 @@
       <version>5.1.21</version>
     </dependency>
 
+    <!-- mybatis START -->
     <dependency>
       <groupId>com.baomidou</groupId>
       <artifactId>mybatisplus-spring-boot-starter</artifactId>
@@ -56,6 +57,12 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.16.18</version>
+    </dependency>
+
+    <!-- redis -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-redis</artifactId>
     </dependency>
 
     <dependency>
