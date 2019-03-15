@@ -12,9 +12,11 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="acstudent" target="1.5" />
       <module name="admin" target="1.8" />
       <module name="cache" target="1.8" />
       <module name="common" target="1.8" />
+      <module name="test" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
