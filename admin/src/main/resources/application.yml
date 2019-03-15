@@ -7,11 +7,6 @@ spring:
     username: root
     password: wsqMYSQL@2018
     driver-class-name: com.mysql.jdbc.Driver
-  redis:
-      host: 119.29.221.146
-      port: 6369
-      password: acstudent547
-      database: 0
   profiles:
     active: dev
 
@@ -28,4 +23,22 @@ mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
     cache-enabled: false
+
+redis:
+  config:
+    master:
+      host: 119.29.221.146
+      port: 6369
+      password: acstudent547
+      database: 0
+    slave0:
+      host: 119.29.221.146
+      port: 6369
+      password: acstudent547
+      database: 1
+    slave1:
+      host: 119.29.221.146
+      port: 6369
+      password: acstudent547
+      database: 2
 
